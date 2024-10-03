@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newsletter Anmeldung</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #9c0; /* Hintergrundfarbe */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #f90; /* Vordergrundfarbe */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        h1 {
+            color: white;
+            font-size: 1.5em;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            color: white;
+        }
+
+        input[type="email"] {
+            margin-top: 5px;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            box-sizing: border-box;
+        }
+
+        .checkboxes {
+            margin-top: 10px;
+        }
+
+        .checkboxes label {
+            font-size: 0.9em;
+        }
+
+        button {
+            margin-top: 15px;
+            width: 100%;
+            padding: 10px;
+            background-color: white;
+            color: #f90;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #f1f1f1;
+        }
+
+        #message {
+            margin-top: 10px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="arisaema.gif" alt="Arisaema Pflanze" style="width:30%; height:auto; border-radius: 10px;">
+        <h1>Abonnieren Sie unseren Newsletter</h1>
+        <form id="emailForm">
+            <label for="email">E-Mail-Adresse:</label>
+            <input type="email" id="email" name="email" placeholder="Ihre E-Mail-Adresse" required>
+
+            <div class="checkboxes">
+                <label for="allInfo">
+                    <input type="checkbox" id="allInfo" name="info" value="all">
+                    Alle Informationen erhalten
+                </label>
+                <label for="adventInfo">
+                    <input type="checkbox" id="adventInfo" name="info" value="advent">
+                    Nur Informationen zur Adventsausstellung erhalten
+                </label>
+            </div>
+
+            <button type="submit">Abonnieren</button>
+        </form>
+        
+        <p id="message"></p>
+    </div>
+    <script>
+        document.getElementById('emailForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var email = document.getElementById('email').value;
+            var allInfoChecked = document.getElementById('allInfo').checked;
+            var adventInfoChecked = document.getElementById('adventInfo').checked;
+
+           
+            if (!allInfoChecked && !adventInfoChecked) {
+                alert("Please select at least one option.");
+                return;
+            }
+            var emailWithFlag = email;
+            if (allInfoChecked) {
+                emailWithFlag += ';1';
+            } else if (adventInfoChecked) {
+                emailWithFlag += ';0';
+            }
+
+            fetch('http://127.0.0.1:5000/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'email=' + encodeURIComponent(emailWithFlag)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('message').innerText = data.message;
+            });
+        });
+
+        
+        document.getElementById('allInfo').addEventListener('change', function() {
+            document.getElementById('adventInfo').disabled = this.checked;
+        });
+
+        document.getElementById('adventInfo').addEventListener('change', function() {
+            document.getElementById('allInfo').disabled = this.checked;
+        });
+    </script>
+</body>
+</html>
