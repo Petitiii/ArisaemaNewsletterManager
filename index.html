@@ -75,6 +75,20 @@
             margin-top: 10px;
             color: white;
         }
+
+        .impressum-link {
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+
+        .impressum-link a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .impressum-link a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -100,6 +114,10 @@
         </form>
         
         <p id="message"></p>
+
+        <div class="impressum-link">
+            <a href="https://arisaema-frankfurt.de/impressum.html" target="_blank">Impressum</a>
+        </div>
     </div>
     <script>
         document.getElementById('emailForm').addEventListener('submit', function(event) {
