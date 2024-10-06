@@ -93,7 +93,7 @@
 </head>
 <body>
     <div class="container">
-        <img src="arisaema.gif" alt="Arisaema Pflanze" style="width:30%; height:auto; border-radius: 10px;">
+        <img src="/arisaema.png" alt="Arisaema Pflanze">
         <h1>Abonnieren Sie unseren Newsletter</h1>
         <form id="emailForm">
             <label for="email">E-Mail-Adresse:</label>
@@ -138,7 +138,7 @@
                 emailWithFlag += ';0';
             }
 
-            fetch('http://127.0.0.1:5000/submit', {
+            fetch('http://www.arisaema-frankfurt.net/submit', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',

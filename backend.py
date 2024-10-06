@@ -1,3 +1,4 @@
+import depen
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 import json
@@ -13,7 +14,7 @@ if not os.path.exists('emails.json'):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('Index.html')
 
 @app.route('/submit', methods=['POST'])
 def submit_email():
